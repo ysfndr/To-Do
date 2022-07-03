@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
 
   heading: {
     textTransform: 'uppercase',
-    fontSize: 40,
-    margin: 30,
+    fontSize: 25,
+    marginTop: 90,
     color: 'black',
     zIndex: 1,
     textAlign: 'center',
