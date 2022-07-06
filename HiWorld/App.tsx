@@ -57,10 +57,7 @@ const InputBox = ({todo, setTodo, handleAdd}: Props1) => {
 const TodoList = ({todos, setTodos}: Props2) => {
   return (
     <View style={styles.todos}>
-      Hello World
-      {
-        todos.map((item) => {item.todo})
-      }
+      {todos.map((item, idx) => <Text key={idx}>{item.todo}</Text>)}
     </View>
   )
 };
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
   todos: {
     display: 'flex',
     justifyContent: 'space-evenly',
-    width: '90%',
+    width: 90,
     flexWrap: 'wrap',
   },
 
