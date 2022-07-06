@@ -30,6 +30,12 @@ export default function App() {
       setTodo("");
     }
   };
+  
+  const handleDelete = () =>{
+    if (todos){
+      setTodos(todos.filter((item) => todos.indexOf(item) !== todos.length - 1 ) );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -37,6 +43,9 @@ export default function App() {
       <StatusBar style="auto" />
       <InputBox todo = {todo} setTodo = {setTodo} handleAdd = {handleAdd}/>
       <TodoList todos = {todos} setTodos={setTodos}/>
+      <Pressable style={styles.delete_button} onPress={handleDelete}>
+        <Text style={styles.delete_text}>X</Text>
+      </Pressable>
     </View>
 )}
 
@@ -57,7 +66,7 @@ const InputBox = ({todo, setTodo, handleAdd}: Props1) => {
 const TodoList = ({todos, setTodos}: Props2) => {
   return (
     <View style={styles.todos}>
-      {todos.map((item, idx) => <Text key={idx}>{item.todo}</Text>)}
+      {todos.map((item, idx) =>  <Text key={idx}>{item.todo}</Text> )}
     </View>
   )
 };
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     right: 0,
     fontSize: 15,
-    backgroundColor: 'maroon',
+    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 3,
@@ -127,4 +136,26 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
 
+  delete_button: {
+    position: 'relative',
+    width: 45,
+    height: 45,
+    marginVertical: 12,
+    marginRight: 47,
+    borderRadius: 100,
+    fontSize: 15,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+
+  },
+
+  delete_text: {
+    fontSize: 19,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
 });
