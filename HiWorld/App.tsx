@@ -11,6 +11,7 @@ interface Props1{
 interface Props2{
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  handleDelete: (id: number) => void;
 }
 
 interface Todo{
@@ -31,9 +32,9 @@ export default function App() {
     }
   };
   
-  const handleDelete = () =>{
+  const handleDelete = (id: number) =>{
     if (todos){
-      setTodos(todos.filter((item) => todos.indexOf(item) !== todos.length - 1 ) );
+      setTodos(todos.filter((item) => item.id !== id));
     }
   };
 
@@ -42,10 +43,7 @@ export default function App() {
       <Text style={styles.heading}>Hiworld Task Manager</Text>
       <StatusBar style="auto" />
       <InputBox todo = {todo} setTodo = {setTodo} handleAdd = {handleAdd}/>
-      <TodoList todos = {todos} setTodos={setTodos}/>
-      <Pressable style={styles.delete_button} onPress={handleDelete}>
-        <Text style={styles.delete_text}>X</Text>
-      </Pressable>
+      <TodoList todos = {todos} setTodos={setTodos} handleDelete = {handleDelete}/>
     </View>
 )}
 
@@ -63,11 +61,18 @@ const InputBox = ({todo, setTodo, handleAdd}: Props1) => {
     </View>
 )}
 
-const TodoList = ({todos, setTodos}: Props2) => {
+const TodoList = ({todos, setTodos, handleDelete}: Props2) => {
   return (
-    <View style={styles.todos}>
-      {todos.map((item, idx) =>  <Text key={idx}>{item.todo}</Text> )}
+    <View>
+      {todos.map((item) => 
+       <View style={styles.todos}>
+        <Text style={styles.todos_text}>{item.todo}</Text>
+      <Pressable style={styles.delete_button} onPress={() => handleDelete(item.id)}>
+        <Text style={styles.delete_text}>X</Text>
+      </Pressable>
+       </View> )}
     </View>
+
   )
 };
 
@@ -131,24 +136,28 @@ const styles = StyleSheet.create({
 
   todos: {
     display: 'flex',
-    justifyContent: 'space-evenly',
-    width: 90,
+    justifyContent: 'center',
+    width: 300,
     flexWrap: 'wrap',
+    alignItems: 'center', 
+  },
+
+  todos_text: {
+    fontSize: 23,
   },
 
   delete_button: {
-    position: 'relative',
-    width: 45,
-    height: 45,
-    marginVertical: 12,
-    marginRight: 47,
+    position: 'absolute',
+    width: 25,
+    height: 25,
+    marginVertical: 2,
+    marginRight: 7,
     borderRadius: 100,
     fontSize: 15,
     backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end',
-
   },
 
   delete_text: {
